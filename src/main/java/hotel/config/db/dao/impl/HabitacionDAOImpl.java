@@ -203,15 +203,9 @@ public class HabitacionDAOImpl implements HabitacionDAO {
             default:
                 throw new SQLException("Tipo de habitación desconocido en la base de datos: " + tipo);
         }
-        habitacion.setEstado(estado); // Establecer el estado cargado de la DB
+        habitacion.setEstado(estado);
 
-        // Para que el objeto en memoria "conozca" su ID de base de datos,
-        // necesitamos una forma de asignárselo. Esto no está en el constructor original.
-        // Una solución es hacer que Habitacion tenga un setter para dbId o una interfaz
         habitacion.setDbId(dbId);
-//        if (habitacion instanceof HabitacionConID) {
-//            ((HabitacionConID) habitacion).setDbId(dbId); // Asignar el ID de la DB
-//        }
 
         return habitacion;
     }

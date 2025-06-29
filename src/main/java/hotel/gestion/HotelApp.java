@@ -1,9 +1,16 @@
 package hotel.gestion;
 
+import hotel.config.db.Conexion;
 import hotel.config.db.dao.impl.HabitacionDAOImpl;
 import hotel.config.db.dao.impl.HuespedDAOImpl;
 import hotel.config.db.dao.impl.ReservaDAOImpl;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
@@ -20,6 +27,30 @@ import java.util.Optional;
 public class HotelApp {
 
     public static void main(String[] args) {
+        String sqlFilePath = "db/db.sql";
+
+        try (Connection conn = Conexion.getConnection();
+             Statement stmt = conn.createStatement();
+             BufferedReader reader = new BufferedReader(new FileReader(sqlFilePath))) {
+
+            StringBuilder sqlBuilder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sqlBuilder.append(line);
+                if (line.trim().endsWith(";")) {
+                    String sqlStatement = sqlBuilder.toString();
+                    stmt.execute(sqlStatement);
+                    sqlBuilder.setLength(0); // Clear buffer for next statement
+                }
+            }
+
+            System.out.println("SQL script executed successfully.");
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+
+
         // Inicializar las implementaciones DAO
         HabitacionDAOImpl habitacionDAO = new HabitacionDAOImpl();
         HuespedDAOImpl huespedDAO = new HuespedDAOImpl();

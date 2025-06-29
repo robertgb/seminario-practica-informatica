@@ -10,9 +10,9 @@ import java.sql.SQLException;
  */
 public class Conexion {
     // Parámetros de conexión a la base de datos
-    private static final String URL = "jdbc:mysql://localhost:3306/hotel_nova_db";
-    private static final String USER = "root"; // ¡Cambia esto a tu usuario de MySQL!
-    private static final String PASSWORD = ""; // ¡Cambia esto a tu contraseña de MySQL!
+    private static final String URL = "jdbc:mysql://localhost:12303/hotel_nova_db";
+    private static final String USER = "avnadmin";
+    private static final String PASSWORD = "root_password";
 
     /**
      * Establece y retorna una conexión a la base de datos.
